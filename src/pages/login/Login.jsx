@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form"
 import Button from '../../utils/Button'
 import image from '../../assets/photo/login-img.svg'
 import { request } from '../../api/request'
+import { date } from '../../utils/date'
 
 const Login = () => {
+    console.log(date);
     const[isLoged, setIsLoged] = useState(true)
     const[isActive, setIsActive] = useState('login')
     const { handleSubmit, register, reset } = useForm()
@@ -21,7 +23,7 @@ const Login = () => {
 
     const registerSubmit = (data) => {
         console.log(data);
-        request.post('/users/register', data).then(res => console.log(res))
+        request.post('/users/register', {...data }).then(res => console.log(res))
     }
 
     
