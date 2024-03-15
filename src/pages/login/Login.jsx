@@ -55,6 +55,9 @@ const Login = () => {
         })
         // request.post('/users/register', data).then(res => console.log(res.data))
     }
+    const loginSubmit = (data) => {
+        request.post('/users/login', data).then(res => console.log(res.data))
+    }
 
     
 
@@ -66,11 +69,11 @@ const Login = () => {
                 <p className={`w-[55%] text-center font-bold pb-2 cursor-pointer border-b-[3px] ${isActive == 'signup' ? ' border-black' : 'text-secondary-dark'} `} onClick={handleSignUp}>Ro’yxatdan o’tish</p>
             </div>
             {isLoged ? 
-                <form className='flex flex-col gap-2' onSubmit={handleSubmit} >
-                    <label htmlFor="username">Username</label>
-                    <input className='p-3 border-2 rounded-lg' type="text" {...register('username')} placeholder='Username' />
+                <form className='flex flex-col gap-2' onSubmit={handleSubmit(loginSubmit)} >
+                    <label htmlFor="email">Email</label>
+                    <input className='p-3 border-2 rounded-lg' type="text" {...register('email')} placeholder='Email' id='email' />
                     <label htmlFor="password">Password</label>
-                    <input className='p-3 border-2 rounded-lg mb-[50px]' type="text" {...register('password')} placeholder='Password' />
+                    <input className='p-3 border-2 rounded-lg mb-[50px]' type="text" {...register('password')} placeholder='Password' id='password' />
                     <Button text={'Kirish'} bg={'dark'} padding={'15px 0'} radius={'16'} font={'bold'}/>
                 </form>
                 :
