@@ -23,7 +23,8 @@ const Login = () => {
 
     const registerSubmit = (data) => {
         console.log(data);
-        request.post('/users/register', {...data }).then(res => console.log(res))
+        request.post('/users/register', {...data, date })
+            .then(res => console.log(res))
     }
 
     
