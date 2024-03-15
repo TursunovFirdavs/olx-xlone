@@ -1,4 +1,5 @@
 import axios from "axios";
+import Cookies from "js-cookie";
 
 const request = axios.create({ baseURL: "http://localhost:8080/" });
 
@@ -22,7 +23,7 @@ const PostData = (config) => {
 
 request.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImV4YXBsZUBnbWFpbC5jb20iLCJpYXQiOjE3MTA0MTAwMjksImV4cCI6MTcxMDQxMzYyOSwic3ViIjoiMSJ9.580eQnXFjUkkLnWAL97S02ODKnPT8Jk1ZPLJcb6o3Rc`;
+    config.headers.Authorization = `Bearer ${Cookies.get('token')}`;
     PostData(config);
     return config;
   },

@@ -4,12 +4,20 @@ import Button from '../../utils/Button'
 import image from '../../assets/photo/login-img.svg'
 import { request } from '../../api/request'
 import { date } from '../../utils/date'
+import { useRegister } from '../../service/mutation/useRegister'
+import { saveState } from '../../config/storage'
+import Cookies from 'js-cookie'
+import { useNavigate } from 'react-router-dom'
+import { Bounce, ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 const Login = () => {
     console.log(date);
     const[isLoged, setIsLoged] = useState(true)
     const[isActive, setIsActive] = useState('login')
     const { handleSubmit, register, reset } = useForm()
+    const { mutate, isError } = useRegister()
+    const navigate = useNavigate()
 
     const handleSignIn = () => {
         setIsLoged(true)
@@ -23,8 +31,29 @@ const Login = () => {
 
     const registerSubmit = (data) => {
         console.log(data);
-        request.post('/users/register', {...data, date })
-            .then(res => console.log(res))
+        mutate({...data, date}, {
+            onSuccess: (res) => {
+                console.log(res)
+                saveState('user', res.user)
+                Cookies.set('token', res.accessToken, { expires: 3 })
+                navigate('/')
+                toast.success("Siz muvofaqiyatli ro'yxatdan o'tdingiz!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce,
+                    });
+            }
+        },
+        {
+            onError: (error) => console.log(error)
+        })
+        // request.post('/users/register', data).then(res => console.log(res.data))
     }
 
     
@@ -61,6 +90,18 @@ const Login = () => {
             }
         </div>
         <img className='absolute bottom-0' src={image} alt="" />
+        <ToastContainer
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="dark"
+            />
     </div>
   )
 }
