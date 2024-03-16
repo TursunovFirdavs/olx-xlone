@@ -2,7 +2,7 @@ import React from 'react'
 
 const Button = ({text, bg, radius, padding, font}) => {
   return (
-    <button className={`${bg == 'dark' && 'bg-dark-color text-white'} ${radius == 16 ? 'rounded-xl' : 'rounded-md'}  font-${font}`} style={{padding: padding}}>
+    <button className={`${bg == 'dark' && 'bg-dark-color text-white' || bg == 'gray' && 'bg-secondary-light border-none font-semibold'} ${radius == 16 ? 'rounded-xl' : 'rounded-md'}  font-${font} border-dark-color`} style={{padding: padding}}>
         {text}
     </button>
   )
