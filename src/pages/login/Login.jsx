@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useForm } from "react-hook-form"
 import Button from '../../utils/Button'
 import image from '../../assets/photo/login-img.svg'
-import { request } from '../../api/request'
 import { date } from '../../utils/date'
 import { useRegister } from '../../service/mutation/useRegister'
 import { saveState } from '../../config/storage'
@@ -10,13 +9,16 @@ import Cookies from 'js-cookie'
 import { useNavigate } from 'react-router-dom'
 import { Bounce, ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css';
+import { request } from '../../api/request'
+import { useLogin } from '../../service/mutation/useLogin'
 
 const Login = () => {
     console.log(date);
     const[isLoged, setIsLoged] = useState(true)
     const[isActive, setIsActive] = useState('login')
     const { handleSubmit, register, reset } = useForm()
-    const { mutate, isError } = useRegister()
+    const { mutate } = useRegister()
+    const { mutate: loginMutation } = useLogin()
     const navigate = useNavigate()
 
     const handleSignIn = () => {
@@ -56,7 +58,13 @@ const Login = () => {
         // request.post('/users/register', data).then(res => console.log(res.data))
     }
     const loginSubmit = (data) => {
-        request.post('/users/login', data).then(res => console.log(res.data))
+        loginMutation(data, {
+            onSuccess: (res) => {
+                console.log(res);
+                Cookies.set('token', res.accessToken, { expires: 3 })
+                navigate('/')
+            }
+        })
     }
 
     

@@ -1,7 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const request = axios.create({ baseURL: "http://localhost:8080/" });
+const request = axios.create({
+  baseURL: "http://localhost:8080",
+});
 
 const PostData = (config) => {
   setTimeout(() => {
@@ -12,9 +14,7 @@ const PostData = (config) => {
     ) {
       axios
         .post("http://localhost:8080/all", JSON.parse(config.data))
-        .then((res) => {
-          console.log(res.data);
-        });
+        .then((res) => res.data);
     }
   }, 500);
 
@@ -23,7 +23,11 @@ const PostData = (config) => {
 
 request.interceptors.request.use(
   (config) => {
-    config.headers.Authorization = `Bearer ${Cookies.get('token')}`;
+    // const token = loadState("user");
+    config.headers = {
+      ...config.headers,
+      Authorization: `Bearer ${Cookies.get('token')}`,
+    };
     PostData(config);
     return config;
   },
@@ -32,4 +36,15 @@ request.interceptors.request.use(
   }
 );
 
-export { request };
+request.interceptors.response.use(
+  (response) => {
+    if (response.status === 401) {
+      return (window.location.pathname = "/");
+    }
+    return response;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+export  {request};
