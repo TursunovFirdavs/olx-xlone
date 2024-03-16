@@ -2,11 +2,29 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import camera from '../../assets/photo/camera.svg'
 import Button from '../../utils/Button'
+import { date } from '../../utils/date'
+import { useCreate } from '../../service/mutation/useCreate'
+import { request } from '../../api/request'
 
 const Create = () => {
   const[isActive, setIsActive] = useState('narx')
+  const[category, setCategory] = useState('')
+  const[price, setPrice] = useState('')
+  const[valyut, setValyut] = useState('')
   const { register, handleSubmit } = useForm()
+  const { mutate } = useCreate(category)
+
   const images = [1, 2, 3, 4, 5, 6, 7]
+  const elementPrice = isActive == 'narx' ? `${price} ${valyut}` : isActive
+
+  console.log(category);
+
+  const creat = (data) => {
+    mutate({...data, category, date, price: elementPrice }, {
+      onSuccess: res => console.log(res)
+    })
+    // request.post('/hobbi', {...data, category, date, price: elementPrice }).then(res => console.log(res))
+  }
 
   return (
     <div className='bg-secondary-light'>
@@ -20,7 +38,7 @@ const Create = () => {
           </div>
           <div className='flex flex-col w-[792px]'>
             <label className='mb-2' htmlFor="category">Rukn</label>
-            <select className='bg-secondary-light py-3 px-4'>
+            <select onChange={(e) => setCategory(e.target.value)}className='bg-secondary-light py-3 px-4'>
               <option className='disabled'>Bo’limni tanlang</option>
               <option value="home">Ko’chmas mulk</option>
               <option value="hobbi">Xobbi</option>
@@ -55,7 +73,7 @@ const Create = () => {
         <div className='p-8 bg-white rounded-md'>
           <div className=' flex flex-col w-[792px]'>
             <label htmlFor='desc'>Tavsif</label>
-            <textarea className='h-[253px] bg-secondary-light py-3 px-4 placeholder:text-gray mt-2 mb-6' id="desc" placeholder='E’lon haqida batafsil'></textarea>
+            <textarea {...register('desc')} className='h-[253px] bg-secondary-light py-3 px-4 placeholder:text-gray mt-2 mb-6' id="desc" placeholder='E’lon haqida batafsil'></textarea>
             <div className='flex justify-between text-gray-600'>
               <p>Yana kamida 80 ta belgi yozing</p>
               <p>0/9000</p>
@@ -73,8 +91,8 @@ const Create = () => {
             <div>
               <p>Narxi</p>
               <div className='flex gap-3'>
-                <input className='bg-secondary-light p-4 w-[340px]' type="text" placeholder='0' />
-                <input className='bg-secondary-light p-4 w-[11 5px]' type="text" placeholder="so'm" />
+                <input onChange={(e) => setPrice(e.target.value)} className='bg-secondary-light p-4 w-[340px]' type="text" placeholder='0' />
+                <input onChange={(e) => setValyut(e.target.value)} className='bg-secondary-light p-4 w-[11 5px]' type="text" placeholder="so'm" />
               </div>
             </div>
           </div>
@@ -85,23 +103,26 @@ const Create = () => {
             <h3 className='text-xl font-bold'>Siz bilan bog’lanish uchun</h3>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="loc">Joylashuv</label>
-              <input type="text" className='bg-secondary-light px-4 py-3' id='loc' />
+              <input {...register('location')} type="text" className='bg-secondary-light px-4 py-3' id='loc' />
             </div>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="name">Ism</label>
-              <input type="text" className='bg-secondary-light px-4 py-3' id='name' />
+              <input {...register('name')} type="text" className='bg-secondary-light px-4 py-3' id='name' />
             </div>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="email">Email-manzil</label>
-              <input type="text" className='bg-secondary-light px-4 py-3' id='email' />
+              <input {...register('email')} type="text" className='bg-secondary-light px-4 py-3' id='email' />
             </div>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="number">Telefon raqami</label>
-              <input type="text" className='bg-secondary-light px-4 py-3' id='number' />
+              <input {...register('number')} type="text" className='bg-secondary-light px-4 py-3' id='number' />
             </div>
           </div>
         </div>
 
+        <div className='font-bold text-right'>
+          <Button onclick={handleSubmit(creat)} text={"E’lon joylash"} bg={'dark'} width={'343px'} padding={'18px 0'} radius={'16'} />
+        </div>
       </div>
     </div>
   )
