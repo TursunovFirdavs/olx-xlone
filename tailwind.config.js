@@ -15,6 +15,7 @@ export default {
     },
     container: {
       padding: '5px',
+      margin: 'auto',
       screens: {
         xl: '1121px'
       }
