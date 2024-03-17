@@ -40,7 +40,9 @@ const Navbar = () => {
                 </select>
             </li>
         </ul>
-        <Button text={"E'lonlarni joylashtirish"} bg={'dark'} padding={'10px 16px'} />
+        <Link to={'/create'}>
+            <Button text={"E'lonlarni joylashtirish"} bg={'dark'} padding={'10px 16px'} />
+        </Link>
     </nav>
     </div>
   )

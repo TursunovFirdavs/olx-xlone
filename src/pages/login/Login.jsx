@@ -62,6 +62,7 @@ const Login = () => {
             onSuccess: (res) => {
                 console.log(res);
                 Cookies.set('token', res.accessToken, { expires: 3 })
+                saveState('user', res.user)
                 navigate('/')
             }
         })

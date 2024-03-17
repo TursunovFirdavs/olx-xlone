@@ -5,6 +5,8 @@ import Button from '../../utils/Button'
 import { date } from '../../utils/date'
 import { useCreate } from '../../service/mutation/useCreate'
 import { request } from '../../api/request'
+import { loadState } from '../../config/storage'
+import { useNavigate } from 'react-router-dom'
 
 const Create = () => {
   const[isActive, setIsActive] = useState('narx')
@@ -13,15 +15,30 @@ const Create = () => {
   const[valyut, setValyut] = useState('')
   const { register, handleSubmit } = useForm()
   const { mutate } = useCreate(category)
+  const navigate = useNavigate()
 
   const images = [1, 2, 3, 4, 5, 6, 7]
   const elementPrice = isActive == 'narx' ? `${price} ${valyut}` : isActive
+  const user = loadState('user')
+  delete user.id
+
+  const auth = {
+    auth: user.username, 
+    authEmail: user.email, 
+    authAddress: user.address,
+    authDate: user.date,
+    authImg: user.image
+  }
+  console.log(auth);
 
   console.log(category);
 
   const creat = (data) => {
-    mutate({...data, category, date, price: elementPrice }, {
-      onSuccess: res => console.log(res)
+    mutate({...data, category, date, price: elementPrice, ...auth }, {
+      onSuccess: res => {
+        console.log(res)
+        navigate('/')
+      } 
     })
     // request.post('/hobbi', {...data, category, date, price: elementPrice }).then(res => console.log(res))
   }
@@ -46,7 +63,7 @@ const Create = () => {
               <option value="cars">Transport</option>
               <option value="texno">Elektr jihozlari</option>
               <option value="children-for">Bolalar uchun</option>
-              <option value="Animals">Hayvonlar</option>
+              <option value="animals">Hayvonlar</option>
               <option value="service">Xizmatlar</option>
               <option value="cloth">Moda va stil</option>
             </select>
@@ -73,7 +90,7 @@ const Create = () => {
         <div className='p-8 bg-white rounded-md'>
           <div className=' flex flex-col w-[792px]'>
             <label htmlFor='desc'>Tavsif</label>
-            <textarea {...register('desc')} className='h-[253px] bg-secondary-light py-3 px-4 placeholder:text-gray mt-2 mb-6' id="desc" placeholder='E’lon haqida batafsil'></textarea>
+            <textarea className='h-[253px] bg-secondary-light py-3 px-4 placeholder:text-gray mt-2 mb-6' id="desc" placeholder='E’lon haqida batafsil'></textarea>
             <div className='flex justify-between text-gray-600'>
               <p>Yana kamida 80 ta belgi yozing</p>
               <p>0/9000</p>
@@ -91,7 +108,7 @@ const Create = () => {
             <div>
               <p>Narxi</p>
               <div className='flex gap-3'>
-                <input onChange={(e) => setPrice(e.target.value)} className='bg-secondary-light p-4 w-[340px]' type="text" placeholder='0' />
+                <input onChange={(e) => setPrice(e.target.value)} className='bg-secondary-light p-4 w-[340px]' type="number" placeholder='0' />
                 <input onChange={(e) => setValyut(e.target.value)} className='bg-secondary-light p-4 w-[11 5px]' type="text" placeholder="so'm" />
               </div>
             </div>
@@ -107,11 +124,11 @@ const Create = () => {
             </div>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="name">Ism</label>
-              <input {...register('name')} type="text" className='bg-secondary-light px-4 py-3' id='name' />
+              <input type="text" className='bg-secondary-light px-4 py-3' id='name' />
             </div>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="email">Email-manzil</label>
-              <input {...register('email')} type="text" className='bg-secondary-light px-4 py-3' id='email' />
+              <input type="text" className='bg-secondary-light px-4 py-3' id='email' />
             </div>
             <div className='flex flex-col gap-2'>
               <label className='text-secondary-dark' htmlFor="number">Telefon raqami</label>
