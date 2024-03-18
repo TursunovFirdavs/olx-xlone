@@ -10,7 +10,8 @@ export default {
         "dark-color": "#19191C",
         "secondary-dark": "#C2C2C2",
         "secondary-light": "#F6F6F6",
-        "main-danger": "#F7B2B2"
+        "main-danger": "#F7B2B2",
+        "dark-danger": "#EA3838"
       }
     },
     container: {
