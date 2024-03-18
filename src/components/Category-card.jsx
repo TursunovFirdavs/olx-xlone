@@ -3,11 +3,12 @@ import { LuHeart } from "react-icons/lu";
 import { Link } from 'react-router-dom';
 
 
-const Card = (item) => {
+const CategoryCard = (item) => {
+    console.log(item.category);
   return (
     <div className='w-[210px] bg-white rounded-md'>
         <div className='p-1'>
-          <Link to={`/product-details/${item.id}`}>
+          <Link to={`/category/${item.category}/${item.id}`}>
             <img className='w-[202px] h-[146px] rounded-md' src={item?.img} alt="" />
           </Link>
             <div className='pt-2 px-[10px] pb-3'>
@@ -24,4 +25,4 @@ const Card = (item) => {
   )
 }
 
-export default Card
+export default CategoryCard
