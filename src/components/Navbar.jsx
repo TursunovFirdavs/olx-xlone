@@ -28,7 +28,7 @@ const Navbar = () => {
                 </Link>
             </li>
             <li>
-                <Link className='flex items-center gap-2'>
+                <Link to={'/profile'} className='flex items-center gap-2'>
                     <img className='pb-[1px]' src={Account} alt="" />
                     <p>Akkaunt</p>
                 </Link>
