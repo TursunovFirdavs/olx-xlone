@@ -10,10 +10,14 @@ import Button from '../../utils/Button'
 import { MdSettings } from "react-icons/md";
 import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 import Card from '../../utils/Card'
+import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 
 const Profile = () => {
-
+  const navigate = useNavigate()
+  const token = Cookies.get('to1ken')
+  token == undefined && navigate('/login')
   const isUser = loadState('user')
   const { data } = useGetUser(isUser.id)
   const { data: allProduct } = useGetAllProducts()
@@ -27,7 +31,7 @@ const Profile = () => {
           <div>
 
             <div className='flex items-center gap-6'>
-              <img className='w-[80px] rounded-full' src={data?.image} alt="" />
+              <img className='w-[80px] h-[80px] rounded-full' src={data?.image} alt="" />
               <div>
                 <div className='flex items-center gap-2'>
                   <h2 className='text-2xl font-bold'>{data?.username}</h2>
@@ -48,14 +52,20 @@ const Profile = () => {
 
           <div className='flex gap-4'>
             <Button text={'Fikr bildirish'} bg={'dark'} padding={'8px 24px'} />
-            <Button text={`Sozlamalar`}  padding={'8px 28px'} font={'semibold'}/>
+            <Button onclick={() => navigate(`/profile-setting/${data?.id}`)} text={`Sozlamalar`}  padding={'8px 28px'} font={'semibold'}/>
           </div>
 
         </div>
-        <h2 className='text-2xl font-bold pb-8 mt-10'>{products?.length} ta e’lon topildi</h2>
+        {products?.length > 0 ? (
+          <>
+          <h2 className='text-2xl font-bold pb-8 mt-10'>{products?.length} ta e’lon topildi</h2>
           <div className='flex gap-[15px] flex-wrap'>
             {products?.map(item => <Card {...item} />)}
           </div>
+          </>
+        ) : (
+          <p className='text-2xl font-bold mt-10'>Hech qanday e'lon topilmadi</p>
+        )}
       </div>
     </div>
   )

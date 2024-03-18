@@ -6,6 +6,7 @@ import Profile from './profile/Profile'
 import ProductDetails from './product-details/Product-details'
 import Create from './create/Create'
 import Category from './category/Category'
+import Settings from './settings/Settings'
 
 const index = () => {
   return (
@@ -17,6 +18,7 @@ const index = () => {
         <Route path='/create' element={<Create/>} />
         <Route path='/category/:category' element={<Category />} />
         <Route path='/category/:category/:id' element={<ProductDetails/>} />
+        <Route path='/profile-setting/:id' element={<Settings />} />
     </Routes>
   )
 }

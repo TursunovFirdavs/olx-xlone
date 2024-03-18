@@ -3,7 +3,7 @@ import { request } from "../../api/request";
 
 export const useGetUser = (id) => {
     return useQuery({
-        queryKey: [id],
+        queryKey: ['editUser', id],
         queryFn: () => request
             .get(`/users/${id}`)
             .then(res => res.data)
