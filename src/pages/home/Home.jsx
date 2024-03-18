@@ -12,9 +12,12 @@ const Home = () => {
   return (
     <div>
       <Categories />
-      <div>
-        <div>
-          {data?.map(item => <Card {...item} />)}
+      <div className='t bg-secondary-light pt-8 pb-[56px]'>
+        <div className='container m-auto'>
+          <h2 className='text-2xl font-bold pb-8'>Siz uchun maxsus</h2>
+          <div className='flex gap-[15px] flex-wrap'>
+            {data?.map(item => <Card {...item} />)}
+          </div>
         </div>
       </div>
     </div>

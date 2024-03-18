@@ -3,7 +3,7 @@ import { request } from "../../api/request";
 
 export const useCreate = (title) => {
     return useMutation({
-        mutationKey: [title],
+        mutationKey: ['create',title],
         mutationFn: (data) => request
             .post(`${title}`, data)
             .then(res => res.data)
