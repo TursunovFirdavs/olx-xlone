@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const request = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://oxo-server.vercel.app",
 });
 
 const PostData = (config) => {
