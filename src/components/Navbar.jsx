@@ -11,9 +11,9 @@ const Navbar = () => {
   return (
     <div className='shadow-md'>
         <nav className='container m-auto flex items-center gap-8 py-5'>
-        <div className='flex-1'>
+        <Link to={'/'} className='flex-1'>
             <img className='' src={Logo} alt="" />
-        </div>
+        </Link>
         <ul className='flex items-center gap-6'>
             <li>
                 <Link className='flex items-center gap-2'>

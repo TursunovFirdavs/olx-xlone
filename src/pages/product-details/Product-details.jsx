@@ -14,6 +14,10 @@ import { useGetCategory } from '../../service/query/useGetCategories'
 import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 import Card from '../../utils/Card'
 import CategoryCard from '../../components/Category-card'
+import { FiHeart } from 'react-icons/fi'
+import { FcLike } from 'react-icons/fc'
+import { dislike, liked } from '../../redux/like/like-reducer'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const ProductDetails = () => {
@@ -31,6 +35,9 @@ const ProductDetails = () => {
 
   const authProducts = allProduct?.filter(item => item.auth == data?.auth)
   console.log(authProducts);
+
+  const dispatch = useDispatch()
+  const { like } = useSelector(state => state.like)
 
   return (
     <div className='bg-secondary-light pt-8 pb-[56px]'>
@@ -74,7 +81,11 @@ const ProductDetails = () => {
             <div className='bg-white px-8 py-6 rounded-md'>
               <div className='flex justify-between'>
                 <p>Joylashtirildi {data?.date}</p>
-                <LuHeart className='text-xl' />
+                {like.findIndex(item => item.id == data?.id) == -1 ?
+                <FiHeart className='text-xl' onClick={() => dispatch(liked(data))} />
+                :
+                <FcLike className='text-xl' onClick={() => dispatch(dislike(data))} />
+            }
               </div>
               <h2 className='text-3xl w-[500px] my-4 font-semibold'>{data?.title}</h2>
               <p className='text-2xl font-bold text-dark-danger'>{data?.price}</p>
