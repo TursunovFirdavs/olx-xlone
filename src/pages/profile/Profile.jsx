@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { loadState } from '../../config/storage'
 import { useGetUser } from '../../service/query/useGetUser'
 import galichka from '../../assets/photo/galichka.svg'
@@ -16,8 +16,10 @@ import Cookies from 'js-cookie'
 
 const Profile = () => {
   const navigate = useNavigate()
-  const token = Cookies.get('to1ken')
-  token == undefined && navigate('/login')
+  // useEffect(() => {
+  //   const token = Cookies.get('to1ken')
+  //   token == undefined && navigate('/login', {replace: true})
+  // }, [])
   const isUser = loadState('user')
   const { data } = useGetUser(isUser.id)
   const { data: allProduct } = useGetAllProducts()

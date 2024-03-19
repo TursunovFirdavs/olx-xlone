@@ -13,6 +13,7 @@ import Button from '../../utils/Button'
 import { useGetCategory } from '../../service/query/useGetCategories'
 import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 import Card from '../../utils/Card'
+import CategoryCard from '../../components/Category-card'
 
 
 const ProductDetails = () => {
@@ -119,7 +120,7 @@ const ProductDetails = () => {
         <div>
           <h2 className='text-2xl font-bold mt-10 mb-6'>O’xshash e’lonlar</h2>
           <div className='flex gap-[15px] flex-wrap'>
-            {productType?.map(item => <Card {...item} /> )}
+            {productType?.map(item => <CategoryCard {...item} category={data?.category} /> )}
           </div>
         </div>
 

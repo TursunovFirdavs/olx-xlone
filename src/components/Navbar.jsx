@@ -22,7 +22,7 @@ const Navbar = () => {
                 </Link>
             </li>
             <li>
-                <Link className='flex items-center gap-2'>
+                <Link to={'/liked'} className='flex items-center gap-2'>
                     <FaRegHeart className='text-lg' />
                     <p>Yoqtirganlar</p>
                 </Link>
