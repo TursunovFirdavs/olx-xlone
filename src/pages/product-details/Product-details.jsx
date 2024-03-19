@@ -1,17 +1,14 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useGetSingleProduct } from '../../service/query/useGetSingleProduct'
-import arrow1 from '../../assets/photo/arrow1.svg'
 import arrow2 from '../../assets/photo/arrow2.svg'
 import location from '../../assets/photo/location.svg'
 import map from '../../assets/photo/map.svg'
 import reklama from '../../assets/photo/reklama.png'
-import { LuHeart } from "react-icons/lu";
 import tel from '../../assets/photo/tel.svg'
 import file from '../../assets/photo/file.svg'
 import Button from '../../utils/Button'
 import { useGetCategory } from '../../service/query/useGetCategories'
-import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 import Card from '../../utils/Card'
 import CategoryCard from '../../components/Category-card'
 import { FiHeart } from 'react-icons/fi'
@@ -21,12 +18,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadState } from '../../config/storage'
 import { MdDelete } from "react-icons/md";
 import { deleteProduct } from '../../service/mutation/deleteProduct'
+import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 
 
 
 const ProductDetails = () => {
   const params = useParams()
   console.log(params);
+  const navigate = useNavigate()
 
   const id = params.id
   const cateory = params.category ? params.category : 'all'
@@ -34,10 +33,10 @@ const ProductDetails = () => {
   const {data} = useGetSingleProduct(id, cateory)
   const {data: productType} = useGetCategory(data?.category)
   const {data: allProduct} = useGetAllProducts()
-  console.log(productType);
+  // console.log(productType);
   console.log(allProduct);
 
-  const authProducts = allProduct?.filter(item => item.auth == data?.auth)
+  const authProducts = allProduct?.data?.filter(item => item.auth == data?.auth)
   console.log(authProducts);
 
   const dispatch = useDispatch()
@@ -49,7 +48,10 @@ const ProductDetails = () => {
 
   const handleDelete = () => {
     mutate(id, {
-      onSuccess: res => console.log(res)
+      onSuccess: res => {
+      console.log(res);  
+      navigate('/')
+      },
     })
   }
 
@@ -58,7 +60,7 @@ const ProductDetails = () => {
       <div className='container m-auto'>
         <div className='flex justify-between items-center'>
           <div className='w-[711px] h-[460px] rounded-lg overflow-hidden flex items-center justify-center bg-white'>
-            <img className='w-[711px] h-full' src={data?.img} alt="" />
+            <img className='w-[711px] h-full object-cover' src={data?.img} alt="" />
           </div>
           <div className='flex flex-col gap-4'>
             <div className='bg-white w-[375px] px-5 py-4 rounded-md'>
@@ -152,14 +154,14 @@ const ProductDetails = () => {
         <div>
           <h2 className='text-2xl font-bold mt-10 mb-6'>O’xshash e’lonlar</h2>
           <div className='flex gap-[15px] flex-wrap'>
-            {productType?.map(item => <CategoryCard {...item} category={data?.category} /> )}
+            {productType?.map(item => <CategoryCard key={item.id} {...item} category={data?.category} /> )}
           </div>
         </div>
 
         <div>
           <h2 className='text-2xl font-bold mb-6 mt-10'>Muallifning boshqa e’lonlari</h2>
           <div className='flex gap-[15px] flex-wrap'>
-            {authProducts?.map(item => <Card {...item} /> )}
+            {authProducts?.map(item => <Card key={item.id} {...item} /> )}
           </div>
         </div>
 

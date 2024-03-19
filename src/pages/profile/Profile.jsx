@@ -12,17 +12,20 @@ import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 import Card from '../../utils/Card'
 import { useNavigate } from 'react-router-dom'
 import Cookies from 'js-cookie'
+import { useGetCategory } from '../../service/query/useGetCategories'
 
 
 const Profile = () => {
   const navigate = useNavigate()
-  // useEffect(() => {
-  //   const token = Cookies.get('to1ken')
-  //   token == undefined && navigate('/login', {replace: true})
-  // }, [])
+  const token = loadState('user')
+  useEffect(() => {
+    if(token == undefined) {
+      navigate('/login', {replace: true})
+    }
+  }, [])
   const isUser = loadState('user')
-  const { data } = useGetUser(isUser.id)
-  const { data: allProduct } = useGetAllProducts()
+  const { data } = useGetUser(isUser?.id)
+  const { data: allProduct } = useGetCategory('all')
   const products = allProduct?.filter(item => item.auth == data?.username)
   console.log(products);
 

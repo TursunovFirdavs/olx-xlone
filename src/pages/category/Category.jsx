@@ -7,7 +7,7 @@ const Category = () => {
     const [filter, setFilter] = useState('')
     const { category } = useParams()
     const { data } = useGetCategory(category)
-    console.log(filter);
+    console.log(category);
 
     const filteredCategory = data?.filter(item => item.location?.toLowerCase().includes(filter.toLowerCase()))
     console.log(filteredCategory);
@@ -39,7 +39,7 @@ const Category = () => {
                         }
                     </div> :
                     <div className='flex gap-[15px] flex-wrap'>
-                        {data?.map(item => <CategoryCard {...item} category={category} />)}
+                        {data?.map(item => <CategoryCard key={item.id} {...item} category={category} />)}
                     </div>
                 }
             </div>

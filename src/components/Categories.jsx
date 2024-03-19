@@ -75,7 +75,7 @@ const Categories = () => {
         <h2 className='mb-6 text-2xl font-bold'>Kategoriyalar</h2>
         <div className='flex justify-between'>
           {categories.map(item => (
-            <Link to={`/category/${item.datakey}`} className='w-[84px]'>
+            <Link key={item.id} to={`/category/${item.datakey}`} className='w-[84px]'>
               <img src={item.img} alt="" />
               <h3 className='text-center mt-3 font-medium'>{item.title}</h3>
             </Link>

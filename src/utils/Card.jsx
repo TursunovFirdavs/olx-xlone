@@ -17,11 +17,11 @@ const Card = (item) => {
     <div className='w-[210px] bg-white rounded-md'>
       <div className='p-1'>
         <Link to={`/product-details/${item.id}`}>
-          <img className='w-[202px] h-[146px] rounded-md' src={item?.img} alt="" />
+          <img className='w-[202px] object-cover h-[146px] rounded-md' src={item?.img} alt="" />
         </Link>
         <div className='pt-2 px-[10px] pb-3'>
           <h3 className='font-semibold h-[40px] mb-3'>{item?.title?.length > 37 ? `${item?.title?.slice(0, 37)}...` : item?.title}</h3>
-          <p className='text-xl font-bold'>{item?.price}</p>
+          <p className='text-xl font-bold text-dark-danger'>{item?.price}</p>
           <p className='text-gray-500'>{item?.location}</p>
           <div className='text-gray-500 flex items-center justify-between'>
             <p className='mt-2 '>{item?.date}</p>

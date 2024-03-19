@@ -3,18 +3,24 @@ import { Categories } from '../../components'
 import { useGetCategory } from '../../service/query/useGetCategories'
 import Card from '../../utils/Card'
 import Button from '../../utils/Button'
+import { useGetAllProducts } from '../../service/query/useGetAllProducts'
 
 
 const Home = () => {
   const [search, setSearch] = useState('')
-  const { data } = useGetCategory('all')
+  const [page, setPage] = useState(1)
+  const { data } = useGetAllProducts(page)
+  console.log(data);
   console.log(data);
 
-  const filteredProduct = data?.filter(item =>
+  const filteredProduct = data?.data?.filter(item =>
     item.title?.toLowerCase().includes(search.toLowerCase())
-);
+  );
 
-console.log(filteredProduct);
+  const buttons = Array(data?.pageSize).fill(null)
+
+
+  console.log(filteredProduct);
 
   return (
     <div>
@@ -30,13 +36,25 @@ console.log(filteredProduct);
           <h2 className='text-2xl font-bold pb-8'>Siz uchun maxsus</h2>
           {search.length > 2 ? (
             <div className='flex gap-[15px] flex-wrap'>
-            {filteredProduct?.map(item => <Card {...item} />)}
-          </div>
+              {filteredProduct?.map(item => <Card {...item} />)}
+            </div>
           ) : (
+            <>
             <div className='flex gap-[15px] flex-wrap'>
-            {data?.map(item => <Card {...item} />)}
+              {data?.data?.map(item => <Card key={item.id} {...item} />)}
+            </div>
+            <div className='flex gap-3 justify-center mt-5'>
+            {
+              buttons.map((_, index) => {
+                const buttonNumber = index + 1
+                return <Button key={index} bg={`${page !== buttonNumber && 'gray'}`} text={`${buttonNumber}`} padding={'0 12px'} onclick={() => setPage(buttonNumber)} />
+              })
+            }
           </div>
+            </>
           )}
+
+          
         </div>
       </div>
     </div>

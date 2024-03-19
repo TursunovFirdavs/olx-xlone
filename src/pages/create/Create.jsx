@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import camera from '../../assets/photo/camera.svg'
 import Button from '../../utils/Button'
@@ -7,6 +7,7 @@ import { useCreate } from '../../service/mutation/useCreate'
 import { request } from '../../api/request'
 import { loadState } from '../../config/storage'
 import { useNavigate } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 const Create = () => {
   const[isActive, setIsActive] = useState('narx')
@@ -17,17 +18,25 @@ const Create = () => {
   const { mutate } = useCreate(category)
   const navigate = useNavigate()
 
+  const token = loadState('user')
+  console.log(token);
+  useEffect(() => {
+    if(token == undefined) {
+      navigate('/login', {replace: true})
+    }
+  }, [])
+
   const images = [1, 2, 3, 4, 5, 6, 7]
   const elementPrice = isActive == 'narx' ? `${price} ${valyut}` : isActive
   const user = loadState('user')
-  delete user.id
+  delete user?.id
 
   const auth = {
-    auth: user.username, 
-    authEmail: user.email, 
-    authAddress: user.address,
-    authDate: user.date,
-    authImg: user.image
+    auth: user?.username, 
+    authEmail: user?.email, 
+    authAddress: user?.address,
+    authDate: user?.date,
+    authImg: user?.image
   }
   console.log(auth);
 
@@ -42,6 +51,7 @@ const Create = () => {
     })
     // request.post('/hobbi', {...data, category, date, price: elementPrice }).then(res => console.log(res))
   }
+  
 
   return (
     <div className='bg-secondary-light'>

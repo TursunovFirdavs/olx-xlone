@@ -16,6 +16,7 @@ const Login = () => {
     console.log(date);
     const[isLoged, setIsLoged] = useState(true)
     const[isActive, setIsActive] = useState('login')
+    const[error, setError] = useState(false)
     const { handleSubmit, register, reset } = useForm()
     const { mutate } = useRegister()
     const { mutate: loginMutation } = useLogin()
@@ -64,6 +65,9 @@ const Login = () => {
                 Cookies.set('token', res.accessToken, { expires: 3 })
                 saveState('user', res.user)
                 navigate('/')
+            },
+            onError: () => {
+                setError(true)
             }
         })
     }
@@ -79,10 +83,13 @@ const Login = () => {
             </div>
             {isLoged ? 
                 <form className='flex flex-col gap-2' onSubmit={handleSubmit(loginSubmit)} >
-                    <label htmlFor="email">Email</label>
+                    <label className={`${error && 'text-dark-danger'}`} htmlFor="email">Email</label>
                     <input className='p-3 border-2 rounded-lg' type="text" {...register('email')} placeholder='Email' id='email' />
-                    <label htmlFor="password">Password</label>
-                    <input className='p-3 border-2 rounded-lg mb-[50px]' type="text" {...register('password')} placeholder='Password' id='password' />
+                    <label className={`${error && 'text-dark-danger'}`} htmlFor="password">Password</label>
+                    <div className='mb-[50px] w-full'>
+                        <input className='p-3 border-2 rounded-lg w-full' type="text" {...register('password')} placeholder='Password' id='password' />
+                        <p className='text-sm mt-2 text-dark-danger'>{error && "Email yoki passwor noto'g'ri"}</p>
+                    </div>
                     <Button text={'Kirish'} bg={'dark'} padding={'15px 0'} radius={'16'} font={'bold'}/>
                 </form>
                 :
