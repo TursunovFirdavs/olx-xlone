@@ -18,6 +18,10 @@ import { FiHeart } from 'react-icons/fi'
 import { FcLike } from 'react-icons/fc'
 import { dislike, liked } from '../../redux/like/like-reducer'
 import { useDispatch, useSelector } from 'react-redux'
+import { loadState } from '../../config/storage'
+import { MdDelete } from "react-icons/md";
+import { deleteProduct } from '../../service/mutation/deleteProduct'
+
 
 
 const ProductDetails = () => {
@@ -38,6 +42,16 @@ const ProductDetails = () => {
 
   const dispatch = useDispatch()
   const { like } = useSelector(state => state.like)
+
+  const isAuth = data?.auth == loadState('user').username
+  console.log(isAuth);
+  const { mutate } = deleteProduct(cateory)
+
+  const handleDelete = () => {
+    mutate(id, {
+      onSuccess: res => console.log(res)
+    })
+  }
 
   return (
     <div className='bg-secondary-light pt-8 pb-[56px]'>
@@ -94,7 +108,14 @@ const ProductDetails = () => {
               <div className='flex pt-5 border-t-2 border-black mt-[70px] justify-between'>
                 <p>ID: 41240834</p>
                 <p>Ko‘rishlar: 137</p>
-                <p className='text-dark-danger'>Shikoyat qilish</p>
+                <div onClick={handleDelete} className='text-dark-danger'>
+                  {isAuth ? 
+                    <div className='flex items-center gap-1 cursor-pointer'>
+                      <MdDelete className='text-lg' />
+                      <p className='font-semibold'>E'lonni o'chirish</p>
+                    </div>
+                   : "Shikoyat qilish"}
+                </div>
               </div>
             </div>
 
