@@ -42,7 +42,7 @@ const ProductDetails = () => {
   const dispatch = useDispatch()
   const { like } = useSelector(state => state.like)
 
-  const isAuth = data?.auth == loadState('user').username
+  const isAuth = data?.auth == loadState('user')?.username
   console.log(isAuth);
   const { mutate } = deleteProduct(cateory)
 
