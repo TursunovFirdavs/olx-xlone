@@ -10,14 +10,15 @@ const likeReducer = createSlice({
     initialState, 
     reducers: {
         liked: (state, action) => {
-            const checked = state.like.find(item => item.id === action.payload.id)
+            const checked = state.like.find(item => item.title === action.payload.title)
             if(!checked){
                 return {...state, like: [action.payload, ...state.like]}
             }
             return state
         },
         dislike: (state, action) => {
-            const checked = state.like.filter(item => item.id !== action.payload.id)
+            const checked = state.like.filter(item => item.title !== action.payload.title)
+            console.log(checked);
             if(checked) {
                 return {...state, like: checked}
             }

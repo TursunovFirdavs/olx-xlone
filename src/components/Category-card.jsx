@@ -24,7 +24,7 @@ const CategoryCard = (item) => {
           <p className='text-gray-500'>{item?.location}</p>
           <div className='text-gray-500 flex items-center justify-between'>
             <p className='mt-2 '>{item?.date}</p>
-            {like.findIndex(like => like.id == item?.id) == -1 ?
+            {like.findIndex(like => like.title == item?.title) == -1 ?
               <FiHeart className='text-xl' onClick={() => dispatch(liked(item))} />
               :
               <FcLike className='text-xl' onClick={() => dispatch(dislike(item))} />
