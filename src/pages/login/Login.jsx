@@ -34,6 +34,7 @@ const Login = () => {
 
     const registerSubmit = (data) => {
         console.log(data);
+        // request.post('/register', data).then(res => console.log(res))
         mutate({...data, date}, {
             onSuccess: (res) => {
                 console.log(res)
@@ -56,7 +57,7 @@ const Login = () => {
         {
             onError: (error) => console.log(error)
         })
-        // request.post('/users/register', data).then(res => console.log(res.data))
+        request.post('/users/register', data).then(res => console.log(res.data))
     }
     const loginSubmit = (data) => {
         loginMutation(data, {
@@ -66,8 +67,9 @@ const Login = () => {
                 saveState('user', res.user)
                 navigate('/')
             },
-            onError: () => {
+            onError: (error) => {
                 setError(true)
+                console.log(error);
             }
         })
     }

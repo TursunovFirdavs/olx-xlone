@@ -97,7 +97,7 @@ const ProductDetails = () => {
             <div className='bg-white px-8 py-6 rounded-md'>
               <div className='flex justify-between'>
                 <p>Joylashtirildi {data?.date}</p>
-                {like.findIndex(item => item.id == data?.id) == -1 ?
+                {like.findIndex(item => item.title == data?.title) == -1 ?
                 <FiHeart className='text-xl' onClick={() => dispatch(liked(data))} />
                 :
                 <FcLike className='text-xl' onClick={() => dispatch(dislike(data))} />
