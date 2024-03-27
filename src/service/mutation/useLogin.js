@@ -5,6 +5,6 @@ export const useLogin = () => {
     return useMutation({
         mutationFn: (data) => request
             .post('/login', data)
-            .then(res => res.data)
+            .then(  res => res.data)
     })
 }
