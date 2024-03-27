@@ -46,9 +46,9 @@ const Create = () => {
     mutate({...data, category, date, price: elementPrice, ...auth }, {
       onSuccess: res => {
         console.log(res)
-        navigate('/')
       } 
     })
+    navigate('/')
     // request.post('/hobbi', {...data, category, date, price: elementPrice }).then(res => console.log(res))
   }
   

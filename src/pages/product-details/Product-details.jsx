@@ -50,9 +50,9 @@ const ProductDetails = () => {
     mutate(id, {
       onSuccess: res => {
       console.log(res);  
-      navigate('/')
-      },
-    })
+    },
+  })
+  navigate('/')
   }
 
   return (
