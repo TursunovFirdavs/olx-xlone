@@ -18,13 +18,13 @@ const Create = () => {
   const { mutate } = useCreate(category)
   const navigate = useNavigate()
 
-  // const token = loadState('user')
-  // console.log(token);
-  // useEffect(() => {
-  //   if(token == undefined) {
-  //     navigate('/login', {replace: true})
-  //   }
-  // }, [])
+  const token = loadState('user')
+  console.log(token);
+  useEffect(() => {
+    if(token == undefined) {
+      navigate('/login', {replace: true})
+    }
+  }, [])
 
   const images = [1, 2, 3, 4, 5, 6, 7]
   const elementPrice = isActive == 'narx' ? `${price} ${valyut}` : isActive
