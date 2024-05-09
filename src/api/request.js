@@ -2,7 +2,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const request = axios.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "https://oxo-server.vercel.app",
 });
 
 const PostData = (config) => {
@@ -13,7 +13,7 @@ const PostData = (config) => {
       config.method == "post"
     ) {
       axios
-        .post("http://localhost:8080/all", JSON.parse(config.data))
+        .post("https://oxo-server.vercel.app/all", JSON.parse(config.data))
         .then((res) => res.data);
     }
   }, 500);
